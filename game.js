@@ -16,8 +16,8 @@ let playerPaddleY = (canvasHeight - paddleHeight) / 2;
 let computerPaddleY = (canvasHeight - paddleHeight) / 2;
 let ballX = canvasWidth / 2;
 let ballY = canvasHeight / 2;
-let ballSpeedX = 7;
-let ballSpeedY = 7;
+let ballSpeedX = 8.5;
+let ballSpeedY = 8.5;
 
 let playerScore = 0;
 let computerScore = 0;
