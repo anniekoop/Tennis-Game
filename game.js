@@ -43,7 +43,7 @@ function drawBall(x, y, radius) {
     context.closePath();
 }
 function draw() {
-    context.fillStyle = '#3578DC';
+    context.fillStyle = 'linear-gradient(#1053b1 0.5px, transparent 0.5px), linear-gradient(to right, #1053b1 0.5px, #0062eb 0.5px)';
     context.fillRect(0, 0, canvasWidth, canvasHeight);
 
     drawNet();
