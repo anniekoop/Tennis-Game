@@ -80,8 +80,6 @@ function moveBall(deltaTime) {
     if (ballX - ballRadius < paddleWidth) {
         if (ballY > playerPaddleY && ballY < playerPaddleY + paddleHeight) {
             ballSpeedX = -ballSpeedX;
-            ballSpeedX *= 1.1; // Increase speed on hit
-            ballSpeedY *= 1.1;
         } else if (ballX - ballRadius < 0) {
             computerScore++;
             resetBall();
@@ -91,8 +89,6 @@ function moveBall(deltaTime) {
     if (ballX + ballRadius > canvasWidth - paddleWidth) {
         if (ballY > computerPaddleY && ballY < computerPaddleY + paddleHeight) {
             ballSpeedX = -ballSpeedX;
-            ballSpeedX *= 1.1; // Increase speed on hit
-            ballSpeedY *= 1.1;
         } else if (ballX + ballRadius > canvasWidth) {
             playerScore++;
             resetBall();
