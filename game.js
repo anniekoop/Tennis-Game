@@ -22,6 +22,9 @@ let ballSpeedY = 6;
 let playerScore = 0;
 let computerScore = 0;
 
+const fps = 60;
+const timeStep = 1000 / fps;
+
 function drawNet() {
     context.fillStyle = 'white';
     context.fillRect((canvasWidth - netWidth) / 2, 0, netWidth, netHeight);
@@ -42,6 +45,7 @@ function drawBall(x, y, radius) {
     context.stroke();
     context.closePath();
 }
+
 function draw() {
     context.fillStyle = '#0062EB';
     context.fillRect(0, 0, canvasWidth, canvasHeight);
@@ -59,16 +63,15 @@ function draw() {
     context.fillText(`Opponent: ${computerScore}`, canvasWidth - 250, 50);
 }
 
-
 function resetBall() {
     ballX = canvasWidth / 2;
     ballY = canvasHeight / 2;
     ballSpeedX = -ballSpeedX;
 }
 
-function moveBall() {
-    ballX += ballSpeedX;
-    ballY += ballSpeedY;
+function moveBall(deltaTime) {
+    ballX += ballSpeedX * (deltaTime / 16.67);
+    ballY += ballSpeedY * (deltaTime / 16.67);
 
     if (ballY - ballRadius < 0 || ballY + ballRadius > canvasHeight) {
         ballSpeedY = -ballSpeedY;
@@ -104,21 +107,28 @@ canvas.addEventListener('mousemove', (event) => {
     playerPaddleY = mouseY - paddleHeight / 2;
 });
 
-function moveComputerPaddle() {
+function moveComputerPaddle(deltaTime) {
     const paddleCenter = computerPaddleY + paddleHeight / 2;
+    const speedAdjustment = deltaTime / 16.67;
     if (paddleCenter < ballY - 35) {
-        computerPaddleY += 4 + Math.random() * 2;
+        computerPaddleY += (4 + Math.random() * 2) * speedAdjustment;
     } else if (paddleCenter > ballY + 35) {
-        computerPaddleY -= 4 + Math.random() * 2;
+        computerPaddleY -= (4 + Math.random() * 2) * speedAdjustment;
     }
 }
 
+let lastFrameTime = performance.now();
 
-function gameLoop() {
-    moveBall();
-    moveComputerPaddle();
+function gameLoop(currentTime) {
+    const deltaTime = currentTime - lastFrameTime;
+    lastFrameTime = currentTime;
+
+    moveBall(deltaTime);
+    moveComputerPaddle(deltaTime);
     draw();
+    
     requestAnimationFrame(gameLoop);
 }
 
-gameLoop();
+lastFrameTime = performance.now();
+requestAnimationFrame(gameLoop);
