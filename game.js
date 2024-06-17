@@ -110,11 +110,11 @@ canvas.addEventListener('mousemove', (event) => {
 function moveComputerPaddle(deltaTime) {
     const paddleCenter = computerPaddleY + paddleHeight / 2;
     const speedAdjustment = deltaTime / 16.67;
-    const maxSpeed = 6 * speedAdjustment;
+    const maxSpeed = 10 * speedAdjustment; // Increased max speed
     if (paddleCenter < ballY - 35) {
-        computerPaddleY += Math.min(maxSpeed, (4 + Math.random() * 2) * speedAdjustment);
+        computerPaddleY += Math.min(maxSpeed, (6 + Math.random() * 2) * speedAdjustment);
     } else if (paddleCenter > ballY + 35) {
-        computerPaddleY -= Math.min(maxSpeed, (4 + Math.random() * 2) * speedAdjustment);
+        computerPaddleY -= Math.min(maxSpeed, (6 + Math.random() * 2) * speedAdjustment);
     }
 }
 
