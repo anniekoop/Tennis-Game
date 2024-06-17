@@ -80,7 +80,9 @@ function moveBall(deltaTime) {
     if (ballX - ballRadius < paddleWidth) {
         if (ballY > playerPaddleY && ballY < playerPaddleY + paddleHeight) {
             ballSpeedX = -ballSpeedX;
-        } else {
+            ballSpeedX *= 1.1; // Increase speed on hit
+            ballSpeedY *= 1.1;
+        } else if (ballX - ballRadius < 0) {
             computerScore++;
             resetBall();
         }
@@ -89,14 +91,12 @@ function moveBall(deltaTime) {
     if (ballX + ballRadius > canvasWidth - paddleWidth) {
         if (ballY > computerPaddleY && ballY < computerPaddleY + paddleHeight) {
             ballSpeedX = -ballSpeedX;
-        } else {
+            ballSpeedX *= 1.1; // Increase speed on hit
+            ballSpeedY *= 1.1;
+        } else if (ballX + ballRadius > canvasWidth) {
             playerScore++;
             resetBall();
         }
-    }
-
-    if (ballX - ballRadius < 0 || ballX + ballRadius > canvasWidth) {
-        ballSpeedX = -ballSpeedX;
     }
 }
 
@@ -110,10 +110,11 @@ canvas.addEventListener('mousemove', (event) => {
 function moveComputerPaddle(deltaTime) {
     const paddleCenter = computerPaddleY + paddleHeight / 2;
     const speedAdjustment = deltaTime / 16.67;
+    const maxSpeed = 6 * speedAdjustment;
     if (paddleCenter < ballY - 35) {
-        computerPaddleY += (4 + Math.random() * 2) * speedAdjustment;
+        computerPaddleY += Math.min(maxSpeed, (4 + Math.random() * 2) * speedAdjustment);
     } else if (paddleCenter > ballY + 35) {
-        computerPaddleY -= (4 + Math.random() * 2) * speedAdjustment;
+        computerPaddleY -= Math.min(maxSpeed, (4 + Math.random() * 2) * speedAdjustment);
     }
 }
 
